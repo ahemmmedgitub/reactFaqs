@@ -1,59 +1,40 @@
 // Write your code here.
+import {Component} from 'react'
 import './index.css'
 
-const FaqItem = props => {
-  const {eachFaq, getStatus, isTrue, clickedId} = props
-  const {questionText, answerText, id} = eachFaq
+class FaqItem extends Component {
+  state = {isClicked: false}
 
-  let plusOrMinus
-  if (clickedId === id) {
-    plusOrMinus = isTrue
+  clickOnPluse = () => {
+    this.setState(prevState => ({isClicked: !prevState.isClicked}))
+  }
+
+  render() {
+    const {eachFaq} = this.props
+    const {questionText, answerText, id} = eachFaq
+    const {isClicked} = this.state
+
+    const displayImg = isClicked
       ? 'https://assets.ccbp.in/frontend/react-js/faqs-minus-icon-img.png'
       : 'https://assets.ccbp.in/frontend/react-js/faqs-plus-icon-img.png'
-  } else {
-    plusOrMinus =
-      'https://assets.ccbp.in/frontend/react-js/faqs-plus-icon-img.png'
-  }
+    const altText = isClicked ? 'minus' : 'plus'
+    console.log(altText)
 
-  let displayAlt
-  if (clickedId === id) {
-    displayAlt = isTrue ? 'minus' : 'plus'
-  } else {
-    displayAlt = 'plus'
-  }
-  let displayAnswer
-
-  if (clickedId === id) {
-    displayAnswer = (
-      <div className="answer-container">
-        <hr className="hr-line" />
-        <p className="answer">{answerText}</p>
-      </div>
+    return (
+      <li className="list-container">
+        <div className="question-plus-container">
+          <h1 className="question-css">{questionText}</h1>
+          <img
+            src={displayImg}
+            alt={altText}
+            className="plus-minus-logo"
+            onClick={this.clickOnPluse}
+          />
+        </div>
+        {isClicked && <p className="answer">{answerText}</p>}
+      </li>
     )
   }
-
-  if (isTrue === false) {
-    displayAnswer = ''
-  }
-
-  const changeStatus = () => {
-    getStatus(id)
-  }
-
-  return (
-    <li className="list-container">
-      <div className="question-plus-container">
-        <h1 className="question-css">{questionText}</h1>
-        <img
-          src={plusOrMinus}
-          alt={displayAlt}
-          className="plus-minus-logo"
-          onClick={changeStatus}
-        />
-      </div>
-      {displayAnswer}
-    </li>
-  )
 }
 
 export default FaqItem

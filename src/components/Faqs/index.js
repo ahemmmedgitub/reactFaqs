@@ -4,22 +4,8 @@ import FaqItem from '../FaqItem'
 import './index.css'
 
 class Faqs extends Component {
-  state = {
-    isTrue: false,
-    clickedId: '',
-  }
-
-  toDisplayAnswer = id => {
-    this.setState(prevState => ({
-      isTrue: !prevState.isTrue,
-      clickedId: id,
-    }))
-  }
-
   render() {
     const {faqsList} = this.props
-    const {isTrue, clickedId} = this.state
-    console.log(clickedId)
 
     return (
       <div className="bg-container">
@@ -27,13 +13,7 @@ class Faqs extends Component {
           <h1 className="faqs_heading">FAQs</h1>
           <ul>
             {faqsList.map(eachFaq => (
-              <FaqItem
-                eachFaq={eachFaq}
-                key={eachFaq.id}
-                getStatus={this.toDisplayAnswer}
-                isTrue={isTrue}
-                clickedId={clickedId}
-              />
+              <FaqItem eachFaq={eachFaq} key={eachFaq.id} />
             ))}
           </ul>
         </div>
